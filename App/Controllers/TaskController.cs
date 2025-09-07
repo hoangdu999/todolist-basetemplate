@@ -39,5 +39,25 @@ namespace ToDoList.App.Controllers
 
             return CreatedAtAction(nameof(GetTasks), new { id = task.Id }, taskDto);
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TaskDto>> UpdateTask(int id, [FromBody] UpdateTaskDto updateTaskDto)
+        {
+            // nếu cần valid thêm thì kiểm tra ModelState
+            var task = _mapper.Map<TodoTask>(updateTaskDto);
+            task.Id = id;                       // ← gán Id từ route
+
+            await _taskRepository.UpdateTaskAsync(task);
+
+            var taskDto = _mapper.Map<TaskDto>(task);
+            return Ok(taskDto);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTask(int id)
+        {
+            var ok = await _taskRepository.DeleteTaskAsync(id);
+            if (!ok) return NotFound();
+            return NoContent();
+        }
     }
 }

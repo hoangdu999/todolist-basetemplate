@@ -24,5 +24,19 @@ namespace ToDoList.App.Repositories
             await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateTaskAsync(TodoTask task)
+        {
+            _context.Tasks.Update(task);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> DeleteTaskAsync(int id)
+        {
+            var entity = await _context.Tasks.FindAsync(id);
+            if (entity == null) return false;
+
+            _context.Tasks.Remove(entity);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

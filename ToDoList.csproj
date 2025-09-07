@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="App\Helpers\" />
-    <Folder Include="App\Services\" />
     <Folder Include="Migrations\" />
     <Folder Include="Routes\" />
     <Folder Include="Extensions\" />
